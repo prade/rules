@@ -1021,12 +1021,9 @@ class Host(object):
     def register_rulesets(self, parent_name, ruleset_definitions):
         rulesets = Ruleset.create_rulesets(parent_name, self, ruleset_definitions, self._state_cache_size)
         for ruleset_name, ruleset in rulesets.items():
-            if ruleset_name in self._ruleset_directory:
-                raise Exception('Ruleset with name {0} already registered'.format(ruleset_name))
-            else:    
-                self._ruleset_directory[ruleset_name] = ruleset
-                self._ruleset_list.append(ruleset)
-                ruleset.bind(self._databases)
+            self._ruleset_directory[ruleset_name] = ruleset
+            self._ruleset_list.append(ruleset)
+            ruleset.bind(self._databases)
 
         return list(rulesets.keys())
 
@@ -1104,7 +1101,7 @@ class Queue(object):
 
     def __init__(self, ruleset_name, database = None, state_cache_size = 1024):
         if not database:
-            database = {'host': 'localhost', 'port': 6379, 'password':None, 'db': 0}
+            database = {'host': os.environ['REDIS_HOST'], 'port': os.environ['REDIS_NOAUTH_PORT'], 'password': None, 'db': 0}
 
         self._ruleset_name = ruleset_name
         self._handle = rules.create_client(state_cache_size, ruleset_name)

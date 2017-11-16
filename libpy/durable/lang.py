@@ -667,7 +667,7 @@ def create_host(databases = None, state_cache_size = 1024):
     main_host.run()
     return main_host
 
-def run_all(databases = None, host_name = '127.0.0.1', port = 5000, routing_rules = None, run = None, state_cache_size = 1024):
+def run_all(databases = None, host_name = '0.0.0.0', port = 18008, routing_rules = None, run = None, state_cache_size = 1024):
     main_host = create_host(databases, state_cache_size)
     main_app = interface.Application(main_host, host_name, port, routing_rules, run)
     main_app.run()
