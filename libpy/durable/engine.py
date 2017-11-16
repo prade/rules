@@ -937,7 +937,7 @@ class Host(object):
 
     def __init__(self, ruleset_definitions = None, databases = None, state_cache_size = 1024):
         if not databases:
-            databases = [{'host': 'localhost', 'port': 6379, 'password': None, 'db': 0}]
+            databases = [{'host': os.environ['REDIS_HOST'], 'port': os.environ['REDIS_NOAUTH_PORT'], 'password': None, 'db': 0},]
             
         self._ruleset_directory = {}
         self._ruleset_list = []
